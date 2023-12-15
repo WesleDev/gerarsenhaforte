@@ -5,6 +5,7 @@ import com.example.senhas.domain.dto.HistoricoSenhaDTO;
 import com.example.senhas.services.SenhaForteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,16 @@ public class SenhaForteController {
     @GetMapping("/senhas")
     public List<HistoricoSenhaDTO> getHistoricoSenha() {
         return senhaForteService.getHistoricoSenha();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletarDoHistoricoSenhas(@PathVariable Long id) {
+        try {
+            senhaForteService.deletarDoHistoricoSenhas(id);
+            return new ResponseEntity<>("Usuario deletado com sucesso.", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new MensagemPersonalizada("Erro ao deletar usuário: ", HttpStatus.BAD_REQUEST);
+        }
     }
 
     public void isValid(int tamanho) {

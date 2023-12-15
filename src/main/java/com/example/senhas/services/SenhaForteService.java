@@ -25,10 +25,14 @@ public class SenhaForteService {
 
     public String gerarSenha(int tamanho, String nome) {
         String senhaForte = geradorSenha.geradorSenhaForte(tamanho, nome);
-        if(!nome.isEmpty()) {
+        if (!nome.isEmpty()) {
             salvarNoHistoricoSenhas(senhaForte, nome);
         }
         return senhaForte;
+    }
+
+    public void deletarDoHistoricoSenhas(Long id) {
+        historicoSenhaRepository.deleteById(id);
     }
 
     public List<HistoricoSenhaDTO> getHistoricoSenha() {
