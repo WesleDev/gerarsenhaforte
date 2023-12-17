@@ -22,12 +22,13 @@ public class SenhaForteController {
     }
 
     @PostMapping("/gerarSenha")
-    public String gerarSenha(@RequestParam(name = "tamanho", defaultValue = "12") int tamanho,
-                             @RequestParam(name = "nome") String nome) {
+    public String gerarSenha(@RequestParam(name = "tamanho") int tamanho,
+                             @RequestParam(name = "nome") String nome,
+                             @RequestParam(name = "tipo") int tipo) {
 
 
-        isValid(tamanho);
-        return senhaForteService.gerarSenha(tamanho, nome);
+        isValid(tamanho, tipo);
+        return senhaForteService.gerarSenha(tamanho, nome, tipo);
     }
 
     @GetMapping("/senhas")
@@ -45,10 +46,16 @@ public class SenhaForteController {
         }
     }
 
-    public void isValid(int tamanho) {
+    public void isValid(int tamanho, int tipo) {
         if (tamanho < 4 || tamanho > 15) {
             throw new MensagemPersonalizada(
                     "Senha menor que 4 digitos ou maior que 15!",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        if (tipo != 1 && tipo != 0) {
+            throw new MensagemPersonalizada(
+                    "Tipo incorreto! 1 com caractere especial, 0 sem caractere especial!",
                     HttpStatus.BAD_REQUEST
             );
         }

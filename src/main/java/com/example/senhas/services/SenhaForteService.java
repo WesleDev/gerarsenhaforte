@@ -23,8 +23,8 @@ public class SenhaForteService {
         this.historicoSenhaRepository = historicoSenhaRepository;
     }
 
-    public String gerarSenha(int tamanho, String nome) {
-        String senhaForte = geradorSenha.geradorSenhaForte(tamanho, nome);
+    public String gerarSenha(int tamanho, String nome, int tipo) {
+        String senhaForte = geradorSenha.geradorSenhaForte(tamanho, nome, tipo);
         if (!nome.isEmpty()) {
             salvarNoHistoricoSenhas(senhaForte, nome);
         }
