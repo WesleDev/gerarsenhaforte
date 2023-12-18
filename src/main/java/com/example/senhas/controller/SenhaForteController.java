@@ -63,7 +63,7 @@ public class SenhaForteController {
 
         if(isNum != "S") {
             throw new MensagemPersonalizada(
-                    "Senha menor que 4 digitos ou maior que 15!",
+                    "tpNumero invalido!",
                     HttpStatus.BAD_REQUEST
             );
         }
