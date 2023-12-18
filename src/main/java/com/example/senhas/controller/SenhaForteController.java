@@ -23,12 +23,13 @@ public class SenhaForteController {
 
     @PostMapping("/gerarSenha")
     public String gerarSenha(@RequestParam(name = "tamanho") int tamanho,
-                             @RequestParam(name = "nome") String nome,
-                             @RequestParam(name = "tipo") int tipo) {
+                             @RequestParam(name = "nome", defaultValue= "") String nome,
+                             @RequestParam(name = "tpCaractere") int tpCaractere,
+                             @RequestParam(name = "tpNumero", defaultValue= "N") String isNum) {
 
 
-        isValid(tamanho, tipo);
-        return senhaForteService.gerarSenha(tamanho, nome, tipo);
+        isValid(tamanho, tpCaractere, isNum);
+        return senhaForteService.gerarSenha(tamanho, nome, tpCaractere, isNum);
     }
 
     @GetMapping("/senhas")
@@ -46,16 +47,23 @@ public class SenhaForteController {
         }
     }
 
-    public void isValid(int tamanho, int tipo) {
+    public void isValid(int tamanho, int tpCaractere, String isNum) {
         if (tamanho < 4 || tamanho > 15) {
             throw new MensagemPersonalizada(
                     "Senha menor que 4 digitos ou maior que 15!",
                     HttpStatus.BAD_REQUEST
             );
         }
-        if (tipo != 1 && tipo != 0) {
+        if (tpCaractere != 1 && tpCaractere != 0) {
             throw new MensagemPersonalizada(
-                    "Tipo incorreto! 1 com caractere especial, 0 sem caractere especial!",
+                    "tpCaractere  incorreto! 1 com caractere especial, 0 sem caractere especial!",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        if(isNum != "S") {
+            throw new MensagemPersonalizada(
+                    "Senha menor que 4 digitos ou maior que 15!",
                     HttpStatus.BAD_REQUEST
             );
         }
