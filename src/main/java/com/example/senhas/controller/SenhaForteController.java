@@ -61,7 +61,7 @@ public class SenhaForteController {
             );
         }
 
-        if(isNum != "S") {
+        if(isNum != "S" && isNum != "N") {
             throw new MensagemPersonalizada(
                     "tpNumero invalido!",
                     HttpStatus.BAD_REQUEST
